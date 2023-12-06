@@ -37,7 +37,7 @@ jobs:
 
   integration-test:
     
-    need: [build-docker-image]
+    needs: [build-docker-image]
     
     - name: Test Run
       run: docker run -v $(pwd)/data:/app/data dummy-cpp:latest
