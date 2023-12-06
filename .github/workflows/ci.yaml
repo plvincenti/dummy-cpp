@@ -1,0 +1,23 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "develop", "master" ]
+  pull_request:
+    branches: [ "develop", "master" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build the Docker image
+      run: docker build -f Dockerfile -t dummy-cpp:latest .
+
+    - name: Run Test Run
+      run: docker run -v $(pwd)/data:/app/data dummy-cpp:latest
+
+    
