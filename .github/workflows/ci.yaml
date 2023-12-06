@@ -8,16 +8,38 @@ on:
 
 jobs:
 
-  build:
+  build-code:
 
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    
+    - name: Code checkout
+      uses: actions/checkout@v3
+
+    - name: Build code in debug
+      run: |
+        cmake -S . -B Debug -DCMAKE_BUILD_TYPE=Debug
+        cmake --build Debug -j4
+
+
+  build-docker-image:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    
+    - name: Code checkout
+      uses: actions/checkout@v3
+    
     - name: Build the Docker image
       run: docker build -f Dockerfile -t dummy-cpp:latest .
 
-    - name: Run Test Run
+  integration-test:
+    
+    need: [build-docker-image]
+    
+    - name: Test Run
       run: docker run -v $(pwd)/data:/app/data dummy-cpp:latest
 
     
