@@ -1,14 +1,11 @@
-#include <iostream>
-#include <fstream>
-#include <sstream>
-
-#include <vector>
-
-#include <boost/program_options.hpp>
-
 #include "Data.hh"
 #include "InputDTO.hh"
+#include "OutputDTO.hh"
 
+#include <vector>
+#include <iostream>
+
+#include <boost/program_options.hpp>
 
 std::pair<std::string, std::string> processCommandLine(int argc, char* argv[]){
   
@@ -38,35 +35,6 @@ std::pair<std::string, std::string> processCommandLine(int argc, char* argv[]){
   return std::make_pair(inputFilePath_l, outputFilePath_l);
 }
 
-
-const void writeOutput(const std::string& outputFile_p, dummy::Data& data_p){
-
-   // Ouverture du fichier de sortie
-  std::ofstream outfile(outputFile_p);
-
-  // Vérification de l'ouverture du fichier
-  if (!outfile.is_open()) {
-    throw std::runtime_error("Impossible to write the outut file");
-  }
-
-  std::cout << "[INFO] Start Writting " << outputFile_p << std::endl;
-  // Écriture des données dans le fichier de sortie
-  for (int i = 0; i < data_p.getData().size(); i++) {
-    for (int j = 0; j < data_p.getData()[i].size(); j++) {
-      outfile << data_p.getData()[i][j];
-      if (j < data_p.getData()[i].size() - 1) {
-        outfile << ";";
-      }
-    }
-    outfile << std::endl;
-  }
-
-  // Fermeture du fichier de sortie
-  outfile.close();
-  std::cout << "[INFO] End Writting " << outputFile_p << std::endl;
-
-}
-
 int main(int argc, char* argv[]) {
 
   std::cout << "[INFO] Start Application" << std::endl;
@@ -88,7 +56,8 @@ int main(int argc, char* argv[]) {
     data_l.reverseData();
 
     std::cout << "[INFO] Write Output File" << std::endl;
-    writeOutput(outputFilePath_l, data_l);
+    dummy::CsvOutputDTO csvOutput_l(outputFilePath_l, ';');
+    csvOutput_l.dumpData(data_l);
 
   }
   catch(std::exception& exp_l){

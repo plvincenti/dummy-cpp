@@ -16,7 +16,7 @@ Data::~Data()
 
 }
 
-const std::vector<std::vector<std::string>>& Data::getData()
+const std::vector<std::vector<std::string>>& Data::getData() const
 {
     return data_m;
 }

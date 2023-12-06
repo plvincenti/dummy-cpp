@@ -14,7 +14,7 @@ public:
     Data();
     virtual ~Data();
 
-    const std::vector<std::vector<std::string>>& getData();
+    const std::vector<std::vector<std::string>>& getData() const;
     void addLineToData(std::vector<std::string> line_p);
 
     void reverseData();
