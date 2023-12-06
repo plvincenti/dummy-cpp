@@ -19,8 +19,8 @@ jobs:
 
     - name: Update and Install dependencies
       run: |
-        apt update && apt upgrade -y
-        apt install -y libboost-all-dev cmake
+        sudo apt-get update && apt-get upgrade -y
+        sudo apt-get install -y libboost-all-dev cmake
 
     - name: Build code in debug
       run: |
