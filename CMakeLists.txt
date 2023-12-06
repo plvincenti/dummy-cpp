@@ -19,6 +19,8 @@ add_executable(dummy-cpp)
 
 target_sources(dummy-cpp PRIVATE 
 	src/main.cc
+    src/Data.cc
+    src/InputDTO.cc
 )
 
 #####################################
