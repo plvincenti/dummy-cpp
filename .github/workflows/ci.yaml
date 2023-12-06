@@ -40,13 +40,5 @@ jobs:
     - name: Build the Docker image
       run: docker build -f Dockerfile -t dummy-cpp:latest .
 
-  integration-test:
-    
-    needs: [build-docker-image]
-    runs-on: ubuntu-latest
-    
-    steps:
     - name: Test Run
       run: docker run -v $(pwd)/data:/app/data dummy-cpp:latest
-
-    
