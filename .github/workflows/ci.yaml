@@ -17,6 +17,11 @@ jobs:
     - name: Code checkout
       uses: actions/checkout@v3
 
+    - name: Update and Install dependencies
+      run: |
+        apt update && apt upgrade -y
+        apt install -y libboost-all-dev cmake
+
     - name: Build code in debug
       run: |
         cmake -S . -B Debug -DCMAKE_BUILD_TYPE=Debug
