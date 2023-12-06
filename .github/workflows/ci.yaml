@@ -1,0 +1,44 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "develop", "master" ]
+  pull_request:
+    branches: [ "develop", "master" ]
+
+jobs:
+
+  build-code:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    
+    - name: Code checkout
+      uses: actions/checkout@v3
+
+    - name: Update and Install dependencies
+      run: |
+        sudo apt-get update && sudo apt-get upgrade -y
+        sudo apt-get install -y libboost-all-dev cmake
+
+    - name: Build code in debug
+      run: |
+        cmake -S . -B Debug -DCMAKE_BUILD_TYPE=Debug
+        cmake --build Debug -j4
+
+
+  build-docker-image:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    
+    - name: Code checkout
+      uses: actions/checkout@v3
+    
+    - name: Build the Docker image
+      run: docker build -f Dockerfile -t dummy-cpp:latest .
+
+    - name: Test Run
+      run: docker run -v $(pwd)/data:/app/data dummy-cpp:latest

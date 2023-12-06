@@ -17,7 +17,9 @@ WORKDIR /build
 
 COPY --chown=build-user:build-user . .
 
-RUN cmake -S . -B Release -DCMAKE_BUILD_TYPE=Release && cmake --build Release
+RUN cmake -S . -B Release -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=Release/install \
+  && cmake --build Release -j4 \
+  && cmake --build Release -t install
 
 FROM ubuntu:latest
 
@@ -32,7 +34,9 @@ USER app-user
 
 WORKDIR /app
 
-COPY --from=build --chown=app-user:app-user /build/Release/dummy-cpp /app
-COPY --from=build --chown=app-user:app-user /build/data/input-test.csv /app/input.csv
+COPY --from=build --chown=app-user:app-user /build/Release/install/bin /app/bin
+COPY --from=build --chown=app-user:app-user /build/Release/install/lib /app/lib
 
-CMD [ "/app/dummy-cpp -i input.csv -o output.csv" ]
+ENV LD_LIBRARY_PATH=/app/lib:${LD_LIBRARY_PATH}
+
+CMD [ "./bin/dummy-cpp", "-i", "data/input-test.csv", "-o", "data/output.csv" ]
