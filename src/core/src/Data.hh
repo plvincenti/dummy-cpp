@@ -19,6 +19,8 @@ public:
 
     void reverseData();
 
+    const std::string& getDataFromIndex(const int& idxCol_p, const int& idxLine_p) const;
+
 private:
 
     std::vector<std::vector<std::string>> data_m;

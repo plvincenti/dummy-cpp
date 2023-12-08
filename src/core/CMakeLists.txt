@@ -22,15 +22,11 @@ set_target_properties(dummy-cpp-core
     VERSION ${PROJECT_VERSION}
 )
 
-target_sources(dummy-cpp-core PRIVATE 
-    Data.cc
-    InputDTO.cc
-    OutputDTO.cc
-)
+add_subdirectory (src)
 
 target_include_directories (dummy-cpp-core
     PUBLIC
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>
 )
 
 target_link_libraries (dummy-cpp-core
@@ -38,10 +34,21 @@ target_link_libraries (dummy-cpp-core
     Boost::program_options
 )
 
+
+#####################################
+# UNIT TESTS                        #
+#####################################
+
+add_subdirectory (unit-tests)
+
+#####################################
+# INSTALL CONF                      #
+#####################################
+
+
 install (TARGETS dummy-cpp-core EXPORT dummy-cpp-export
     RUNTIME_DEPENDENCY_SET dummy-cpp-dependencies
 )
-
 
 include (GNUInstallDirs)
 

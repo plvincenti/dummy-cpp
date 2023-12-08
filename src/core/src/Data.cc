@@ -1,6 +1,7 @@
 #include "Data.hh"
 
 #include <algorithm>
+#include <iostream>
 
 namespace dummy
 {
@@ -32,6 +33,14 @@ void Data::reverseData()
   for (int i = 0; i < data_m.size(); i++) {
     std::reverse(data_m[i].begin(), data_m[i].end());
   }
+}
+
+const std::string& Data::getDataFromIndex(const int& idxCol_p, const int& idxLine_p) const{
+  
+  if(idxCol_p >= data_m.size() || idxLine_p >= data_m[idxCol_p].size()){
+    throw std::runtime_error("Data::getDataFromIndex : Index out of bound");
+  }
+  return data_m[idxCol_p][idxLine_p];
 }
 
 }

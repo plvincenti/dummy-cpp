@@ -23,7 +23,7 @@ add_custom_target (run_unit_tests
 )
 
 add_custom_command (OUTPUT ${CMAKE_BINARY_DIR}/tests-reports/unit_tests.xml
-    COMMAND $<TARGET_FILE:unit-tests> --log_level=all
+    COMMAND $<TARGET_FILE:unit-tests> --log_level=error --report_level=short --log_format=HRF
     DEPENDS unit-tests
     WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/tests-reports 
 )
