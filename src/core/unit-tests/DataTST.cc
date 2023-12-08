@@ -28,6 +28,15 @@ BOOST_AUTO_TEST_CASE(GetDataFromIndex_TestCase)
 {
     BOOST_CHECK_THROW(data_m.getDataFromIndex(56,0), std::runtime_error);
     BOOST_CHECK_THROW(data_m.getDataFromIndex(0,3), std::runtime_error);
+
+    BOOST_CHECK_EQUAL(data_m.getDataFromIndex(0,0), "col1");
+    BOOST_CHECK_EQUAL(data_m.getDataFromIndex(0,1), "col2");
+
+    BOOST_CHECK_EQUAL(data_m.getDataFromIndex(1,0), "toto");
+    BOOST_CHECK_EQUAL(data_m.getDataFromIndex(1,1), "tata");
+
+    BOOST_CHECK_EQUAL(data_m.getDataFromIndex(2,0), "titi");
+    BOOST_CHECK_EQUAL(data_m.getDataFromIndex(2,1), "tutu");
 }
 
 BOOST_AUTO_TEST_CASE(ReverseData_TestCase)
