@@ -19,6 +19,7 @@ COPY --chown=build-user:build-user . .
 
 RUN cmake -S . -B Release -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=Release/install \
   && cmake --build Release -j4 \
+  && cmake --build Release -j4 -t run_unit_tests \
   && cmake --build Release -t install
 
 FROM ubuntu:latest

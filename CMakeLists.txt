@@ -15,42 +15,18 @@ set (CMAKE_CXX_EXTENSIONS OFF)
 # TARGET DEFINITION                 #
 #####################################
 
-add_executable(dummy-cpp)
-
-target_sources(dummy-cpp PRIVATE 
-	main.cc
-)
-
-#####################################
-# DEPENDENCY CONFIG                 #
-#####################################
-
-find_package(Boost QUIET REQUIRED COMPONENTS program_options)
-
-if(NOT Boost_FOUND)
-    message(FATAL_ERROR "Boost Not found")
-endif()
-
-target_link_libraries(dummy-cpp PUBLIC
-    Boost::program_options
-)
+add_subdirectory (src)
 
 #####################################
 # INSTALL CONFIG                    #
 #####################################
 
 include (GNUInstallDirs)
-install (TARGETS dummy-cpp EXPORT dummy-cpp-export
-    RUNTIME_DEPENDENCY_SET dummy-cpp-dependencies)
 
 install (RUNTIME_DEPENDENCY_SET dummy-cpp-dependencies)
 
 list( APPEND CMAKE_INSTALL_RPATH ${CMAKE_INSTALL_LIBDIR} )
 set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
-
-install (DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/src/
-    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
-    FILES_MATCHING PATTERN "*.hh")
 
 # CMAKE CONFIG INSTALLATION
 
